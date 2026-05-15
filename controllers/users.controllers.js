@@ -1,4 +1,5 @@
 import Users from "../models/users.model.js";
+import { hashPassword } from "../utils/hashing.js";
 
 export const getUsers = async (req, res) => {
     try {
@@ -22,7 +23,8 @@ export const getUserById = async (req, res) => {
 export const postUser = async (req, res) => {
     try {
         const { name, username, password } = req.body;
-        const newUser = new Users({ name, username, password });
+        const hashedPassword = hashPassword(password);
+        const newUser = new Users({ name, username, password: hashedPassword });
         const savedUser = await newUser.save();
         res.status(201).json(savedUser);
     } catch (error) {

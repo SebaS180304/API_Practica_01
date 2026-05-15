@@ -1,5 +1,6 @@
 import "dotenv/config";
 import express from "express";
+import cors from "cors";
 import morgan from "morgan";
 import indexRoutes from "./routes/index.routes.js";
 import usersRoutes from "./routes/users.route.js";
@@ -9,6 +10,8 @@ import connectDB from "./utils/db.js";
 connectDB();
 
 const app = express();
+
+app.use(cors());
 
 app.use(morgan("dev"));
 app.use(express.json());
